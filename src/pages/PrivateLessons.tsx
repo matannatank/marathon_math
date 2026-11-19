@@ -37,7 +37,7 @@ export function PrivateLessons() {
             <iframe
               title="לוח זמינות"
               src={pl.calComUrl}
-              className="mt-4 h-[520px] w-full rounded-2xl border border-line"
+              className="mt-4 h-[760px] w-full rounded-2xl border border-line md:h-[560px]"
             />
           ) : (
             <div className="mt-4 grid h-64 place-items-center rounded-2xl border border-dashed border-slate-300 bg-paper text-muted">
