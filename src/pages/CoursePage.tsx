@@ -108,13 +108,15 @@ export function CoursePage() {
         <p className="mt-3 text-sm italic text-muted">{siteConfig.home.authorityLine}</p>
       </section>
 
-      <section id="videos" className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6">
-        <h2 className="mb-4 text-xl font-extrabold text-navy">סרטוני פתרון מבחן</h2>
-        <VideoMiniCourse
-          videos={course.videos}
-          onGoPricing={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-        />
-      </section>
+      {course.videos.length > 0 && (
+        <section id="videos" className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6">
+          <h2 className="mb-4 text-xl font-extrabold text-navy">סרטוני פתרון מבחן</h2>
+          <VideoMiniCourse
+            videos={course.videos}
+            onGoPricing={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+          />
+        </section>
+      )}
 
       <section id="plan" className="bg-paper">
         <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
