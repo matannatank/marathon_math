@@ -51,6 +51,8 @@ export type ProductCard = {
 
 export type Course = {
   slug: string
+  /** נושא לאיחוד כרטיסים בעמוד הבית - קורסים עם אותו subject מוצגים ככרטיס אחד עם בחירת מסלול */
+  subject: string
   name: string
   code: string
   institutionId: string
@@ -139,6 +141,7 @@ function defaultProducts(): ProductCard[] {
 export const courses: Course[] = [
   {
     slug: 'linear-algebra-20046',
+    subject: 'אלגברה ליניארית',
     name: 'אלגברה ליניארית לניהול טכנולוגיה',
     code: '20046',
     institutionId: 'hit',
@@ -226,6 +229,7 @@ export const courses: Course[] = [
   },
   {
     slug: 'linear-algebra-20077',
+    subject: 'אלגברה ליניארית',
     name: 'אלגברה ליניארית',
     code: '20077',
     institutionId: 'hit',
@@ -283,128 +287,132 @@ export const courses: Course[] = [
     testimonialIds: ['t1', 't2'],
   },
   {
-    slug: 'calculus-hit',
-    name: 'חדו"א',
-    code: '[מספר]',
+    slug: 'calculus-20151',
+    subject: 'חדו"א (אינפי 1)',
+    name: 'חשבון אינפיניטסימלי 1',
+    code: '20151',
     institutionId: 'hit',
-    trackIds: ['ee', 'cs', 'ie'],
-    examDate: '2026-07-20',
+    trackIds: ['ee'],
+    examDate: '2027-01-24',
     examLabel: 'מועד א\'',
     courseState: 'open',
     liveWhatsappUrl: 'https://wa.me/972559312361',
     quietWhatsappUrl: 'https://wa.me/972559312361',
-    showStickyUrgency: true,
     stickyUrgency: 'המרתון החי יוצא לדרך בקרוב - הבטחת מקומות פתוחה',
+    showStickyUrgency: true,
+    lateJoinersNote:
+      'המרתון כבר יצא לדרך? בהרשמה עכשיו תקבלו גישה מיידית להקלטות של המפגשים שכבר התקיימו כדי להשלים פערים, ותצטרפו אלינו בשידור חי למפגשים הבאים!',
+    showLateJoinersNote: false,
     showSafetyNet: true,
     safetyNetText:
       'עדיין מתלבטים אם להירשם למרתון? קחו את דף הנוסחאות המלא שלי לקורס + עדכונים לקראת המבחן בחינם לוואטסאפ',
+    // מבנה המבחן: שאלה 1 חובה (חקירת פונקציה, 20%) + 4 מתוך 5 שאלות בחלק ב', כל שאלה 20% בשני סעיפים של 10%.
+    // סוגי הסעיפים בחלק ב' מתחלפים בין מספרי השאלות, לכן המפגשים בנויים לפי סוג שאלה.
+    // התאריכים והשעות זמניים - מתעדכנים לפי המשמרות.
     sessions: [
       {
-        label: 'מפגש 1',
-        topic: 'גבולות ורציפות — תבניות חוזרות',
-        covers: 'סגירת שאלות פתיחה',
+        label: 'מפגש 1 (11.1, 18:00-21:00)',
+        topic: 'חקירת פונקציה מלאה - תחום הגדרה, קיצון, קמירות ופיתול, אסימפטוטות ושרטוט',
+        covers: 'סגירת שאלה 1 (שאלת החובה)',
         points: '20 נק\'',
       },
       {
-        label: 'מפגש 2',
-        topic: 'נגזרות וחקירת פונקציה',
-        covers: 'סגירת שאלות מרכזיות',
-        points: '30 נק\'',
+        label: 'מפגש 2 (13.1, 18:00-21:00)',
+        topic: 'אינטגרלים - פונקציות רציונליות ושברים חלקיים, הצבה, אינטגרציה בחלקים',
+        covers: 'סעיפי האינטגרל בחלק ב\'',
+        points: '10 נק\' לסעיף',
       },
       {
-        label: 'מפגש 3',
-        topic: 'אינטגרלים מסוימים ולא מסוימים',
-        covers: 'סגירת שאלות אינטגרל',
-        points: '25 נק\'',
+        label: 'מפגש 3 (14.1, 18:00-21:00)',
+        topic: 'גבולות וסדרות - כלל לופיטל, גבולות מהצורה 1 בחזקת אינסוף, התכנסות סדרה רקורסיבית',
+        covers: 'סעיפי הגבול והסדרה בחלק ב\'',
+        points: '10 נק\' לסעיף',
       },
       {
-        label: 'מפגש 4',
-        topic: 'טורי טיילור וקירובים',
-        covers: 'סגירת שאלת בונוס/טור',
-        points: '15 נק\'',
+        label: 'מפגש 4 (17.1, 13:30-16:30)',
+        topic: 'שימושי האינטגרל - שטח בין עקומות, נפח גוף סיבוב, אורך קשת',
+        covers: 'סעיפי השטח, הנפח והקשת בחלק ב\'',
+        points: '10 נק\' לסעיף',
       },
       {
-        label: 'מפגש 5',
-        topic: 'סימולציה מלאה',
-        covers: 'חיבור המבחן',
-        points: 'מבחן מלא',
+        label: 'מפגש 5 (20.1, 18:00-21:00)',
+        topic: 'רציפות, גזירות והוכחות - רציפות עם פרמטרים, גזירות לפי הגדרה, אי-שוויונים במשפט לגראנז\', קיום שורש יחיד, קיצון בקטע סגור',
+        covers: 'סעיפי ההוכחה והרציפות בחלק ב\'',
+        points: '10 נק\' לסעיף',
       },
     ],
-    videos: [
-      { id: 'c1', title: 'זיהוי תבנית גבול קלאסית', tier: 'open' },
-      {
-        id: 'c2',
-        title: 'חקירת פונקציה בלי ללכת לאיבוד',
-        tier: 'locked',
-        pointsBadge: '30 נק\'',
-        duration: '14:20',
-      },
-    ],
+    videos: [],
     products: defaultProducts(),
     testimonialIds: ['t2', 't3'],
   },
   {
-    slug: 'probability-hit',
-    name: 'הסתברות',
-    code: '[מספר]',
+    slug: 'discrete-math-20069',
+    subject: 'מתמטיקה בדידה',
+    name: 'מתמטיקה בדידה',
+    code: '20069',
     institutionId: 'hit',
-    trackIds: ['ee', 'cs', 'ie'],
-    examDate: '2026-07-22',
+    trackIds: ['cs'],
+    examDate: '2027-02-01',
     examLabel: 'מועד א\'',
     courseState: 'open',
     liveWhatsappUrl: 'https://wa.me/972559312361',
     quietWhatsappUrl: 'https://wa.me/972559312361',
-    showStickyUrgency: true,
     stickyUrgency: 'המרתון החי יוצא לדרך בקרוב - הבטחת מקומות פתוחה',
+    showStickyUrgency: true,
+    lateJoinersNote:
+      'המרתון כבר יצא לדרך? בהרשמה עכשיו תקבלו גישה מיידית להקלטות של המפגשים שכבר התקיימו כדי להשלים פערים, ותצטרפו אלינו בשידור חי למפגשים הבאים!',
+    showLateJoinersNote: false,
     showSafetyNet: true,
     safetyNetText:
       'עדיין מתלבטים אם להירשם למרתון? קחו את דף הנוסחאות המלא שלי לקורס + עדכונים לקראת המבחן בחינם לוואטסאפ',
+    // מבנה המבחן (לפי מבחני הקוד הקודם 20067): שאלות של 25 נק', כל שאלה מורכבת מסעיפים קצרים מנושאים שונים.
+    // לכן המפגשים בנויים לפי נושא ולא לפי מספר שאלה. התאריכים והשעות זמניים.
     sessions: [
       {
-        label: 'מפגש 1',
-        topic: 'הסתברות בסיסית וקומבינטוריקה',
-        covers: 'סגירת שאלות פתיחה',
-        points: '25 נק\'',
+        label: 'מפגש 1 (20.1, 13:30-16:30)',
+        topic: 'לוגיקה ושיטות הוכחה - טבלאות אמת, טאוטולוגיה, צורת CNF, הוכחה בשלילה וקונטרפוזיטיב',
+        covers: 'סעיפי הלוגיקה וההוכחה',
+        points: 'סעיפים של 5-12 נק\'',
       },
       {
-        label: 'מפגש 2',
-        topic: 'משתנים מקריים בדידים',
-        covers: 'סגירת שאלות מרכזיות',
-        points: '25 נק\'',
+        label: 'מפגש 2 (22.1, 9:00-12:00)',
+        topic: 'קבוצות - פעולות על קבוצות, הוכחת הכלה ושוויון, קבוצת החזקה וספירת תתי-קבוצות',
+        covers: 'סעיפי הקבוצות',
+        points: 'סעיפים של 5-12 נק\'',
       },
       {
-        label: 'מפגש 3',
-        topic: 'משתנים מקריים רציפים',
-        covers: 'סגירת שאלות צפיפות',
-        points: '25 נק\'',
+        label: 'מפגש 3 (25.1, 13:30-16:30)',
+        topic: 'אינדוקציה ותורת המספרים - אינדוקציה על סכומים והתחלקות, gcd, אלגוריתם אוקלידס המורחב, מספרים ראשוניים',
+        covers: 'סעיפי האינדוקציה ותורת המספרים',
+        points: 'סעיפים של 5-12 נק\'',
       },
       {
-        label: 'מפגש 4',
-        topic: 'התפלגויות מפורסמות',
-        covers: 'סגירת שאלת זיהוי',
-        points: '15 נק\'',
+        label: 'מפגש 4 (26.1, 13:30-16:30)',
+        topic: 'יחסים - יחס שקילות ומחלקות שקילות, יחס סדר חלקי ומלא',
+        covers: 'סעיפי היחסים',
+        points: 'סעיפים של 5-12 נק\'',
       },
       {
-        label: 'מפגש 5',
-        topic: 'סימולציה מלאה',
-        covers: 'חיבור המבחן',
-        points: 'מבחן מלא',
+        label: 'מפגש 5 (28.1, 13:30-16:30)',
+        topic: 'פונקציות ועוצמות - חד-חד-ערכית ועל, קבוצות שוות עוצמה, ושאלת ההגדרות (שאלה 1)',
+        covers: 'סעיפי הפונקציות ושאלה 1',
+        points: 'סעיפים של 5-12 נק\'',
       },
     ],
-    videos: [
-      { id: 'p1', title: 'איך בוחרים מודל הסתברותי נכון', tier: 'open' },
-      {
-        id: 'p2',
-        title: 'תוחלת ושונות בלי בלבול בנוסחאות',
-        tier: 'locked',
-        pointsBadge: '25 נק\'',
-        duration: '11:05',
-      },
-    ],
+    videos: [],
     products: defaultProducts(),
     testimonialIds: ['t1', 't3'],
   },
 ]
+
+/** קורסים מקובצים לפי נושא, בסדר ההופעה בקובץ */
+export function getSubjects() {
+  const map = new Map<string, Course[]>()
+  for (const c of courses) {
+    map.set(c.subject, [...(map.get(c.subject) ?? []), c])
+  }
+  return [...map.entries()].map(([subject, list]) => ({ subject, courses: list }))
+}
 
 export function getInstitution(id: string) {
   return institutions.find((i) => i.id === id)!

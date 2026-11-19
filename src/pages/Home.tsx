@@ -5,7 +5,7 @@ import { Footer } from '@/components/Footer'
 import { WhatsAppFab } from '@/components/WhatsAppFab'
 import { TestimonialCapsule } from '@/components/TestimonialCapsule'
 import { siteConfig } from '@/content/siteConfig'
-import { courses, getTracksForCourse, institutions } from '@/content/courses'
+import { getSubjects, getTracksForCourse, institutions } from '@/content/courses'
 import { testimonials } from '@/content/testimonials'
 import { track } from '@/lib/analytics'
 
@@ -98,20 +98,23 @@ export function Home() {
           <p className="mt-1 text-muted">{institutions[0].shortName} · שנה א׳</p>
         )}
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
-          {courses.map((course) => {
-            const tracks = getTracksForCourse(course)
-            const open = openCourse === course.slug
+          {getSubjects().map(({ subject, courses: group }) => {
+            const open = openCourse === subject
             return (
-              <div key={course.slug} className="rounded-2xl border border-line bg-white shadow-sm">
+              <div key={subject} className="rounded-2xl border border-line bg-white shadow-sm">
                 <button
                   type="button"
-                  onClick={() => setOpenCourse(open ? null : course.slug)}
+                  onClick={() => setOpenCourse(open ? null : subject)}
                   className="flex w-full items-center justify-between gap-3 p-5 text-right"
                 >
                   <span>
-                    <span className="block text-lg font-extrabold text-ink">{course.name}</span>
+                    <span className="block text-lg font-extrabold text-ink">{subject}</span>
                     <span className="mt-0.5 block text-sm text-muted">
-                      קורס <span className="tabular" dir="ltr">{course.code}</span>
+                      {group.length > 1 ? 'בחרו מסלול' : (
+                        <>
+                          קורס <span className="tabular" dir="ltr">{group[0].code}</span>
+                        </>
+                      )}
                     </span>
                   </span>
                   <span className="text-navy">{open ? '▾' : '◂'}</span>
@@ -119,23 +122,20 @@ export function Home() {
                 {open && (
                   <div className="border-t border-line px-5 pb-5 pt-3">
                     <p className="mb-2 text-sm text-muted">בחרו מסלול:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {tracks.map((t) => (
+                    <div className="flex flex-col gap-2">
+                      {group.map((course) => (
                         <Link
-                          key={t.id}
+                          key={course.slug}
                           to={`/course/${course.slug}`}
-                          className="rounded-full border border-navy px-3 py-1.5 text-sm font-semibold text-navy no-underline hover:bg-navy hover:text-white"
+                          className="rounded-xl border border-navy px-3 py-2 text-sm font-semibold text-navy no-underline hover:bg-navy hover:text-white"
                         >
-                          {t.name}
+                          {getTracksForCourse(course).map((t) => t.name).join(' / ')}
+                          <span className="mr-2 font-normal opacity-70">
+                            קורס <span className="tabular" dir="ltr">{course.code}</span>
+                          </span>
                         </Link>
                       ))}
                     </div>
-                    <Link
-                      to={`/course/${course.slug}`}
-                      className="mt-3 inline-block text-sm font-bold text-cta no-underline"
-                    >
-                      לכל המסלולים בעמוד הקורס ←
-                    </Link>
                   </div>
                 )}
               </div>
