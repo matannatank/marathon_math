@@ -97,51 +97,57 @@ export function Home() {
         {!showInstitution && (
           <p className="mt-1 text-muted">{institutions[0].shortName} · שנה א׳</p>
         )}
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
-          {getSubjects().map(({ subject, courses: group }) => {
-            const open = openCourse === subject
-            return (
-              <div key={subject} className="rounded-2xl border border-line bg-white shadow-sm">
-                <button
-                  type="button"
-                  onClick={() => setOpenCourse(open ? null : subject)}
-                  className="flex w-full items-center justify-between gap-3 p-5 text-right"
-                >
-                  <span>
-                    <span className="block text-lg font-extrabold text-ink">{subject}</span>
-                    <span className="mt-0.5 block text-sm text-muted">
-                      {group.length > 1 ? 'בחרו מסלול' : (
-                        <>
-                          קורס <span className="tabular" dir="ltr">{group[0].code}</span>
-                        </>
-                      )}
+        {(['א', 'ב'] as const).map((semester) => (
+          <div key={semester} className="mt-8">
+            <h3 className="text-lg font-extrabold text-ink">סמסטר {semester}׳</h3>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            {getSubjects(semester).map(({ subject, courses: group }) => {
+              const key = `${semester}:${subject}`
+              const open = openCourse === key
+              return (
+                <div key={key} className="rounded-2xl border border-line bg-white shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => setOpenCourse(open ? null : key)}
+                    className="flex w-full items-center justify-between gap-3 p-5 text-right"
+                  >
+                    <span>
+                      <span className="block text-lg font-extrabold text-ink">{subject}</span>
+                      <span className="mt-0.5 block text-sm text-muted">
+                        {group.length > 1 ? 'בחרו מסלול' : (
+                          <>
+                            קורס <span className="tabular" dir="ltr">{group[0].code}</span>
+                          </>
+                        )}
+                      </span>
                     </span>
-                  </span>
-                  <span className="text-navy">{open ? '▾' : '◂'}</span>
-                </button>
-                {open && (
-                  <div className="border-t border-line px-5 pb-5 pt-3">
-                    <p className="mb-2 text-sm text-muted">בחרו מסלול:</p>
-                    <div className="flex flex-col gap-2">
-                      {group.map((course) => (
-                        <Link
-                          key={course.slug}
-                          to={`/course/${course.slug}`}
-                          className="rounded-xl border border-navy px-3 py-2 text-sm font-semibold text-navy no-underline hover:bg-navy hover:text-white"
-                        >
-                          {getTracksForCourse(course).map((t) => t.name).join(' / ')}
-                          <span className="mr-2 font-normal opacity-70">
-                            קורס <span className="tabular" dir="ltr">{course.code}</span>
-                          </span>
-                        </Link>
-                      ))}
+                    <span className="text-navy">{open ? '▾' : '◂'}</span>
+                  </button>
+                  {open && (
+                    <div className="border-t border-line px-5 pb-5 pt-3">
+                      <p className="mb-2 text-sm text-muted">בחרו מסלול:</p>
+                      <div className="flex flex-col gap-2">
+                        {group.map((course) => (
+                          <Link
+                            key={course.slug}
+                            to={`/course/${course.slug}`}
+                            className="rounded-xl border border-navy px-3 py-2 text-sm font-semibold text-navy no-underline hover:bg-navy hover:text-white"
+                          >
+                            {getTracksForCourse(course).map((t) => t.name).join(' / ')}
+                            <span className="mr-2 font-normal opacity-70">
+                              קורס <span className="tabular" dir="ltr">{course.code}</span>
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+          </div>
+        ))}
       </section>
 
       {/* About — single photo placement */}

@@ -53,10 +53,13 @@ export type Course = {
   slug: string
   /** נושא לאיחוד כרטיסים בעמוד הבית - קורסים עם אותו subject מוצגים ככרטיס אחד עם בחירת מסלול */
   subject: string
+  /** סמסטר - קובע באיזה חלק של עמוד הבית הקורס מופיע */
+  semester: 'א' | 'ב'
   name: string
   code: string
   institutionId: string
   trackIds: string[]
+  /** תאריך מועד א' בפורמט YYYY-MM-DD. ריק = התאריך עוד לא פורסם */
   examDate: string
   examLabel: string
   courseState: CourseState
@@ -142,6 +145,7 @@ export const courses: Course[] = [
   {
     slug: 'linear-algebra-20046',
     subject: 'אלגברה ליניארית',
+    semester: 'א',
     name: 'אלגברה ליניארית לניהול טכנולוגיה',
     code: '20046',
     institutionId: 'hit',
@@ -230,6 +234,7 @@ export const courses: Course[] = [
   {
     slug: 'linear-algebra-20077',
     subject: 'אלגברה ליניארית',
+    semester: 'א',
     name: 'אלגברה ליניארית',
     code: '20077',
     institutionId: 'hit',
@@ -289,6 +294,7 @@ export const courses: Course[] = [
   {
     slug: 'calculus-20027',
     subject: 'חדו"א (אינפי 1)',
+    semester: 'א',
     name: 'חשבון אינפי 1 לניהול טכנולוגיה',
     code: '20027',
     institutionId: 'hit',
@@ -347,6 +353,7 @@ export const courses: Course[] = [
   {
     slug: 'calculus-20151',
     subject: 'חדו"א (אינפי 1)',
+    semester: 'א',
     name: 'חשבון אינפיניטסימלי 1',
     code: '20151',
     institutionId: 'hit',
@@ -406,6 +413,7 @@ export const courses: Course[] = [
   {
     slug: 'discrete-math-20069',
     subject: 'מתמטיקה בדידה',
+    semester: 'א',
     name: 'מתמטיקה בדידה',
     code: '20069',
     institutionId: 'hit',
@@ -461,12 +469,122 @@ export const courses: Course[] = [
     products: defaultProducts(),
     testimonialIds: ['t1', 't3'],
   },
+  {
+    slug: 'calculus2-20028',
+    subject: 'חדו"א (אינפי 2)',
+    semester: 'ב',
+    name: 'חשבון אינפי 2 לניהול טכנולוגיה',
+    code: '20028',
+    institutionId: 'hit',
+    trackIds: ['ie'],
+    examDate: '',
+    examLabel: 'מועד א\'',
+    courseState: 'pre_first_marathon',
+    liveWhatsappUrl: 'https://wa.me/972559312361',
+    quietWhatsappUrl: 'https://wa.me/972559312361',
+    showStickyUrgency: false,
+    showLateJoinersNote: false,
+    showSafetyNet: false,
+    // מבנה המבחן (מועדי 2022, 2023, 2026): 6 שאלות, בוחרים 5, כל שאלה שני סעיפים של 10 נק'.
+    // סוגי הסעיפים מתחלפים בין מספרי השאלות, לכן המפגשים בנויים לפי סוג שאלה.
+    // תאריך המבחן ותאריכי המפגשים יתווספו כשיתפרסם לוח הבחינות של סמסטר ב'.
+    sessions: [
+      {
+        label: 'מפגש 1',
+        topic: 'משוואות דיפרנציאליות מסדר ראשון - פרידת משתנים, משוואה לינארית, בעיות התחלה',
+        covers: 'סעיפי המד"ר מסדר ראשון',
+        points: '10 נק\' לסעיף',
+      },
+      {
+        label: 'מפגש 2',
+        topic: 'משוואות דיפרנציאליות מסדר שני - פתרון כללי ופתרון פרטי עם תנאי התחלה',
+        covers: 'סעיפי המד"ר מסדר שני',
+        points: '10 נק\' לסעיף',
+      },
+      {
+        label: 'מפגש 3',
+        topic: 'פונקציות בשני משתנים - גבול ורציפות, נגזרות חלקיות לפי הגדרה, דיפרנציאל שלם וחישוב מקורב, נגזרת מכוונת וגרדיאנט, מישור משיק',
+        covers: 'סעיפי הנגזרות החלקיות והקירוב',
+        points: '10 נק\' לסעיף',
+      },
+      {
+        label: 'מפגש 4',
+        topic: 'קיצון בשני משתנים - נקודות קריטיות וסיווגן, מקסימום ומינימום מוחלטים בתחום',
+        covers: 'סעיפי הקיצון',
+        points: '10 נק\' לסעיף',
+      },
+      {
+        label: 'מפגש 5',
+        topic: 'אינטגרלים - אינטגרל לא אמיתי (התכנסות והתבדרות), שטח בין עקומות, נפח גוף סיבוב, אורך קשת',
+        covers: 'סעיפי האינטגרל',
+        points: '10 נק\' לסעיף',
+      },
+    ],
+    videos: [],
+    products: defaultProducts(),
+    testimonialIds: ['t2', 't3'],
+  },
+  {
+    slug: 'discrete-math2-20068',
+    subject: 'מתמטיקה בדידה 2',
+    semester: 'ב',
+    name: 'מתמטיקה בדידה למדעי המחשב 2',
+    code: '20068',
+    institutionId: 'hit',
+    trackIds: ['cs'],
+    examDate: '',
+    examLabel: 'מועד א\'',
+    courseState: 'pre_first_marathon',
+    liveWhatsappUrl: 'https://wa.me/972559312361',
+    quietWhatsappUrl: 'https://wa.me/972559312361',
+    showStickyUrgency: false,
+    showLateJoinersNote: false,
+    showSafetyNet: false,
+    // מבנה המבחן (מועדי 2024, 2025): 6 שאלות של 25 נק', 4 הטובות נספרות. כל שאלה מורכבת מסעיפים מנושאים שונים.
+    // לכן המפגשים בנויים לפי נושא ולא לפי מספר שאלה.
+    // תאריך המבחן ותאריכי המפגשים יתווספו כשיתפרסם לוח הבחינות של סמסטר ב'.
+    sessions: [
+      {
+        label: 'מפגש 1',
+        topic: 'קומבינטוריקה בסיסית - עקרון הסכום והכפל, תמורות, צירופים, סדרות עם חזרות, ספירת תתי-קבוצות',
+        covers: 'סעיפי הספירה',
+        points: 'סעיפים של 4-14 נק\'',
+      },
+      {
+        label: 'מפגש 2',
+        topic: 'הכלה והדחה וחלוקות - עקרון ההכלה וההדחה, תמורות אי-סדר, מספר פתרונות שלמים למשוואה, ספירת פונקציות',
+        covers: 'סעיפי ההכלה וההדחה',
+        points: 'סעיפים של 4-14 נק\'',
+      },
+      {
+        label: 'מפגש 3',
+        topic: 'נוסחאות נסיגה - מציאת צורה מפורשת לסדרה רקורסיבית וסימון O גדול',
+        covers: 'סעיף נוסחת הנסיגה',
+        points: 'עד 14 נק\'',
+      },
+      {
+        label: 'מפגש 4',
+        topic: 'תורת המספרים - ספירת מחלקים, פונקציית אוילר, התחלקות',
+        covers: 'סעיפי תורת המספרים',
+        points: 'סעיפים של 4-14 נק\'',
+      },
+      {
+        label: 'מפגש 5',
+        topic: 'תורת הגרפים - דרגות, עצים, קשירות, גרף אוילר והמילטון, תת-גרף מושרה, ושאלת ההגדרות (שאלה 1)',
+        covers: 'סעיפי הגרפים ושאלה 1',
+        points: 'סעיפים של 4-16 נק\'',
+      },
+    ],
+    videos: [],
+    products: defaultProducts(),
+    testimonialIds: ['t1', 't3'],
+  },
 ]
 
 /** קורסים מקובצים לפי נושא, בסדר ההופעה בקובץ */
-export function getSubjects() {
+export function getSubjects(semester: Course['semester']) {
   const map = new Map<string, Course[]>()
-  for (const c of courses) {
+  for (const c of courses.filter((x) => x.semester === semester)) {
     map.set(c.subject, [...(map.get(c.subject) ?? []), c])
   }
   return [...map.entries()].map(([subject, list]) => ({ subject, courses: list }))

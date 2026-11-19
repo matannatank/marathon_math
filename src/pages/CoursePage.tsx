@@ -65,13 +65,21 @@ export function CoursePage() {
             ))}
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <span className="text-sm text-muted">
-              תאריך מבחן:{' '}
-              <span className="tabular font-semibold text-ink" dir="ltr">
-                {course.examDate}
+            {course.examDate ? (
+              <>
+                <span className="text-sm text-muted">
+                  תאריך מבחן:{' '}
+                  <span className="tabular font-semibold text-ink" dir="ltr">
+                    {course.examDate}
+                  </span>
+                </span>
+                <PressureMeter examDate={course.examDate} examLabel={course.examLabel} />
+              </>
+            ) : (
+              <span className="text-sm text-muted">
+                תאריך המבחן ומועדי המפגשים יפורסמו עם לוח הבחינות של הסמסטר
               </span>
-            </span>
-            <PressureMeter examDate={course.examDate} examLabel={course.examLabel} />
+            )}
           </div>
         </div>
       </section>
